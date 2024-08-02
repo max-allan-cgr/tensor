@@ -7,10 +7,8 @@ Docker build:
 docker build -t img .
 # Dockerey things happen...
 
-docker run -it img
-java -cp target/hellotensorflow-1.0-SNAPSHOT.jar HelloTensorFlow
-Error: Unable to initialize main class HelloTensorFlow
-Caused by: java.lang.NoClassDefFoundError: org/tensorflow/ExecutionEnvironment
+docker run -it img 
+java -jar target/hellotensorflow-1.0-SNAPSHOT.jar in.jpg out.jpg
 
 ```
 
