@@ -31,7 +31,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 10 doubled is 20
 ```
 
-If using OSX then build with the amd64 platform:
+If using OSX then disable Rosetta in Docker settings and build with the amd64 platform:
 ```
 docker build -t tens --platform linux/amd64 .
 ```
