@@ -164,6 +164,7 @@
              cocoTreeMap.put(cocoCount, cocoLabel);
              cocoCount++;
          }
+         System.out.println("Cococount = " + cocoCount);
          try (Graph g = new Graph(); Session s = new Session(g)) {
              Ops tf = Ops.create(g);
              Constant<TString> fileName = tf.constant(imagePath);
@@ -197,6 +198,7 @@
                       TFloat32 detectionAnchorIndices = (TFloat32) outputTensorMap.get("detection_anchor_indices");
                       TFloat32 detectionMulticlassScores = (TFloat32) outputTensorMap.get("detection_multiclass_scores")) {
                      int numDetects = (int) numDetections.getFloat(0);
+                     System.out.println("numDetects = " + numDetects);
                      if (numDetects > 0) {
                          ArrayList<FloatNdArray> boxArray = new ArrayList<>();
                          //TODO tf.image.combinedNonMaxSuppression
@@ -208,6 +210,8 @@
                                  boxArray.add(detectionBoxes.get(0, n));
                              }
                          }
+                         System.out.println("boxArraySize = " + boxArray.size() );
+
                          //2-D. A list of RGBA colors to cycle through for the boxes.
                          Operand<TFloat32> colors = tf.constant(new float[][]{
                                  {0.9f, 0.3f, 0.3f, 0.0f},
@@ -232,29 +236,29 @@
                              //convert the 4D input image to normalised 0.0f - 1.0f
                              //Draw bounding boxes using boxes tensor and list of colors
                              //multiply by 255 then reshape and recast to TUint8 3D tensor
-                             WriteFile writeFile = tf.io.writeFile(outImagePathPlaceholder,
-                                     tf.image.encodeJpeg(
-                                             tf.dtypes.cast(tf.reshape(
-                                                     tf.math.mul(
-                                                             tf.image.drawBoundingBoxes(tf.math.div(
-                                                                     tf.dtypes.cast(tf.constant(reshapeTensor),
-                                                                             TFloat32.class),
-                                                                     tf.constant(255.0f)
-                                                                     ),
-                                                                     boxesPlaceHolder, colors),
-                                                             tf.constant(255.0f)
-                                                     ),
-                                                     tf.array(
-                                                             imageShape.asArray()[0],
-                                                             imageShape.asArray()[1],
-                                                             imageShape.asArray()[2]
-                                                     )
-                                             ), TUint8.class),
-                                             jpgOptions));
-                             //output the JPEG to file
-                             s.runner().feed(outImagePathPlaceholder, TString.scalarOf(outputImagePath))
-                                     .feed(boxesPlaceHolder, boxes)
-                                     .addTarget(writeFile).run();
+                            //  WriteFile writeFile = tf.io.writeFile(outImagePathPlaceholder,
+                            //          tf.image.encodeJpeg(
+                            //                  tf.dtypes.cast(tf.reshape(
+                            //                          tf.math.mul(
+                            //                                  tf.image.drawBoundingBoxes(tf.math.div(
+                            //                                          tf.dtypes.cast(tf.constant(reshapeTensor),
+                            //                                                  TFloat32.class),
+                            //                                          tf.constant(255.0f)
+                            //                                          ),
+                            //                                          boxesPlaceHolder, colors),
+                            //                                  tf.constant(255.0f)
+                            //                          ),
+                            //                          tf.array(
+                            //                                  imageShape.asArray()[0],
+                            //                                  imageShape.asArray()[1],
+                            //                                  imageShape.asArray()[2]
+                            //                          )
+                            //                  ), TUint8.class),
+                            //                  jpgOptions));
+                            //  //output the JPEG to file
+                            //  s.runner().feed(outImagePathPlaceholder, TString.scalarOf(outputImagePath))
+                            //          .feed(boxesPlaceHolder, boxes)
+                            //          .addTarget(writeFile).run();
                          }
                      }
                  }

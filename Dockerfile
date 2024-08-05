@@ -10,5 +10,5 @@ COPY src /home/build/src/
 COPY pom.xml /home/build
 
 RUN mvn package
-ENTRYPOINT ["/bin/sh"]
-CMD []
+ENTRYPOINT ["/usr/bin/java"]
+CMD [ "-jar", "target/hellotensorflow-1.0-SNAPSHOT.jar", "in.jpg" , "out.jpg"]
