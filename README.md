@@ -19,7 +19,7 @@ numDetects = 100
 boxArraySize = 21
 
 
-docker run -m 1100m 41adopt
+docker run -m 1100m img
 2024-08-05 11:36:46.607428: I external/org_tensorflow/tensorflow/cc/saved_model/reader.cc:43] Reading SavedModel from: models/faster_rcnn_inception_resnet_v2_1024x1024
 2024-08-05 11:36:47.102987: I external/org_tensorflow/tensorflow/cc/saved_model/reader.cc:107] Reading meta graph with tags { serve }
 2024-08-05 11:36:47.103080: I external/org_tensorflow/tensorflow/cc/saved_model/reader.cc:148] Reading SavedModel debug info (if present) from: models/faster_rcnn_inception_resnet_v2_1024x1024
