@@ -40,6 +40,7 @@
  import org.tensorflow.types.TFloat32;
  import org.tensorflow.types.TString;
  import org.tensorflow.types.TUint8;
+
  
  
  /**
@@ -146,11 +147,6 @@
  
      public static void main(String[] params) {
  
-         if (params.length != 2) {
-             throw new IllegalArgumentException("Exactly 2 parameters required !");
-         }
-         //my output image
-         String outputImagePath = params[1];
          //my test image
          String imagePath = params[0];
          // get path to model folder
