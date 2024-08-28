@@ -153,6 +153,8 @@
          String modelPath = "models/faster_rcnn_inception_resnet_v2_1024x1024";
          // load saved model
          SavedModelBundle model = SavedModelBundle.load(modelPath, "serve");
+         System.out.println (model.session());   
+
          //create a map of the COCO 2017 labels
          TreeMap<Float, String> cocoTreeMap = new TreeMap<>();
          float cocoCount = 0;

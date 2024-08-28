@@ -1,0 +1,21 @@
+FROM cgr.dev/chainguard-private/adoptium-jdk:adoptium-openjdk-8-dev
+USER root
+RUN apk add --no-cache gradle curl libstdc++
+USER 65532
+WORKDIR /home/build
+RUN mkdir -p models/faster_rcnn_inception_resnet_v2_1024x1024
+RUN curl -sL  https://www.kaggle.com/api/v1/models/tensorflow/faster-rcnn-inception-resnet-v2/tensorFlow2/1024x1024/1/download | tar xz -C models/faster_rcnn_inception_resnet_v2_1024x1024
+RUN wget https://github.com/tensorflow/models/blob/master/research/object_detection/test_images/image2.jpg?raw=true -O in.jpg
+COPY src /home/build/src/
+COPY build.gradle /home/build
+COPY settings.gradle /home/build
+COPY gradle /home/build/gradle/
+
+RUN gradle assemble
+ENTRYPOINT ["/bin/sh"]
+# ENTRYPOINT ["/usr/bin/java"]
+# CMD [ "-jar", "build/libs/hellotensorflow-1.0-SNAPSHOT.jar", "in.jpg" ]
+
+# docker build --platform linux/amd64 -t tens.gradle -f Dockerfile.gradle .
+# docker run -it tens.gradle
+# java -jar build/libs/hellotensorflow-1.0-SNAPSHOT.jar in.jpg
